@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { Typewriter } from "react-simple-typewriter";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, MeshDistortMaterial, Sphere } from "@react-three/drei";
 import Header from "./Header";
-
+import * as THREE from "three";
 export default function Hero() {
   const controls = useAnimation();
 
@@ -21,40 +21,65 @@ export default function Hero() {
   const initParticles = async (main: any) => {
     await loadFull(main);
   };
-
+   const dotPositions = useMemo(() => {
+    const count = 20;
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      arr[i * 3 + 0] = (Math.random() * 2 - 1) * 8;  // x entre -8 y +8
+      arr[i * 3 + 1] = (Math.random() * 2 - 1) * 5;  // y entre -5 y +5
+      arr[i * 3 + 2] = -2;                            // z fijo detrás de la esfera
+    }
+    return arr;
+  }, []);
   return (
     <section
       id="inicio"
       className="relative flex items-center justify-center text-center h-screen overflow-hidden hero-bg"
     >
-      <div className="absolute inset-0 hero-overlay z-10 pointer-events-none" />
+     <div className="absolute inset-0 hero-overlay z-0 pointer-events-none" />
 
-      <Canvas
-         className="absolute inset-0 z-0"
-          style={{
-   width: "100%",
-   height: "100%",           // hereda h-screen del section
-   overflow: "visible",      // ¡muy importante!
- }}
-        gl={{ alpha: true }}
-        camera={{ position: [0, 0, 16], fov: 50 }}
-      >
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+    <Canvas
+  className="absolute inset-0 z-0"
+  style={{
+    width: "100%",
+    height: "100%",
+    overflow: "visible",
+  }}
+  gl={{ alpha: true }}
+  camera={{ position: [0, 0, 16], fov: 50 }}
+>
+  {/* ✨ PUNTITOS BLANCOS */}
+  <points>
+    <bufferGeometry>
+      <bufferAttribute
+        attach="attributes-position"
+        count={dotPositions.length / 3}
+        array={dotPositions}
+        itemSize={3}
+      />
+    </bufferGeometry>
+    <pointsMaterial
+      size={0.1}            // ajusta el tamaño en unidades de cámara
+      color="#ffffff"
+      opacity={0.7}         // ajusta opacidad
+      transparent
+    />
+  </points>
 
-        {/* escala a tu gusto; como no hay recorte ahora, puedes subir a 4.5 o incluso 5 */}
-        <Sphere args={[3, 64, 64]} scale={1.6}>
-          <MeshDistortMaterial
-            color="#ff5e87"
-            emissive="#e100ff"
-            distort={0.25}
-            speed={1.1}
-            roughness={0.4}
-          />
-        </Sphere>
-
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.2} />
-      </Canvas>
+  {/* tu ambientLight, directionalLight, Sphere, OrbitControls… */}
+  <ambientLight intensity={0.4} />
+  <directionalLight position={[5, 5, 5]} intensity={1} />
+  <Sphere args={[3, 64, 64]} scale={1.6}>
+    <MeshDistortMaterial
+      color="#ff5e87"
+      emissive="#e100ff"
+      distort={0.25}
+      speed={1.1}
+      roughness={0.4}
+    />
+  </Sphere>
+  <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.2} />
+</Canvas>
 
       <Particles
         id="hero-particles"
@@ -62,17 +87,28 @@ export default function Hero() {
         options={{
           fpsLimit: 60,
           interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" } },
+            events: {
+              onHover: { enable: true, mode: "repulse" },
+            },
           },
           particles: {
+            number: {
+              value: 18, // más puntos
+              density: { enable: true, area: 800 },
+            },
             color: { value: "#ffffff" },
-            links: { enable: true, distance: 100, opacity: 0.05 },
-            move: { speed: 0.3 },
-            number: { value: 12 },
+            shape: { type: "circle" }, // sólo círculos
+            opacity: { value: { min: 0.5, max: 0.9 } },
             size: { value: { min: 2, max: 4 } },
+            move: {
+              enable: true,
+              speed: 0.3,
+              outModes: { default: "out" },
+            },
+            links: { enable: false }, // sin líneas
           },
         }}
-        className="absolute inset-0 z-5 pointer-events-none"
+        className="absolute inset-0 z-10 pointer-events-none"
       />
 
       <motion.div
