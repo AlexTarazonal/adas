@@ -26,21 +26,29 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex items-center justify-center text-center min-h-screen overflow-hidden hero-bg"
+      className="relative flex items-center justify-center text-center min-h-screen overflow-visible hero-bg"
     >
-      {/* Dark overlay for contraste */}
+      {/* Dark overlay para contraste */}
       <div className="absolute inset-0 hero-overlay z-10 pointer-events-none" />
       <Header />
 
-      {/* 3D animated sphere */}
+      {/* 3D animated sphere más grande */}
       <Canvas
         className="absolute inset-0 z-0"
+        style={{
+          position: "", // o 'unset' / 'initial'
+          width: "100%",
+          height: "100%",
+        }}
         gl={{ alpha: true }}
-        camera={{ position: [0, 0, 6], fov: 50 }}
+        camera={{ position: [0, 0, 12], fov: 50 }}
       >
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <Sphere args={[1.3, 64, 64]} scale={1.1}>
+        {/* Aquí el cambio clave: args y scale */}
+        <Sphere args={[3, 64, 64]} scale={2}>
+          {" "}
+          {/* radio = 3, escala = 2 */}
           <MeshDistortMaterial
             color="#ff5e87"
             emissive="#e100ff"
@@ -84,7 +92,7 @@ export default function Hero() {
         animate={controls}
       >
         <motion.h1
-         className="text-[5rem] md:text-[7rem] font-extrabold mb-4 text-white bg-clip-text gradient-text"
+          className="text-[5rem] md:text-[7rem] font-extrabold mb-4 text-white bg-clip-text gradient-text"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "backOut" }}
@@ -125,14 +133,6 @@ export default function Hero() {
           Creo experiencias web modernas, interactivas y accesibles, combinando
           diseño y rendimiento al máximo.
         </motion.p>
-
-        <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.7 }}
-        >
-        </motion.div>
       </motion.div>
 
       {/* Global Styles */}
