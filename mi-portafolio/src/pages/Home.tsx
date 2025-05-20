@@ -6,12 +6,9 @@ export default function Home() {
   return (
     <div className="">
 
-
+ <Hero />
       <main className="pt-24 px-6 md:px-12 lg:px-24 space-y-32">
-        {/* Sección Hero visual */}
-        <section id="inicio">
-          <Hero />
-        </section>
+       
 
         {/* SOBRE MÍ */}
         <section id="sobre" className="scroll-mt-24">
