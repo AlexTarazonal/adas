@@ -3,4 +3,6 @@
 @tailwind utilities;
 body {
   margin: 0;
+  color: white; /* <-- ✅ Agregado */
+  background-color: #000; /* opcional para confirmar visibilidad */
 }

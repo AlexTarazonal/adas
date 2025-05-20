@@ -1,0 +1,32 @@
+/* src/components/Header.module.css */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 0;
+  background: transparent;
+  z-index: 50;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 4rem; /* ajusta aquí si quieres más/menos separación */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #111827; /* negro oscuro */
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: #555555; /* ligeramente gris al pasar el ratón */
+}

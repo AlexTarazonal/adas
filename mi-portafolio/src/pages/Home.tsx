@@ -1,14 +1,18 @@
-
-import Hero from "../components/Hero";
-import Footer from "../components/Footer";
+// src/pages/Home.tsx
+import React from 'react';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
 
 export default function Home() {
   return (
-    <div className="">
-
- <Hero />
+    <>
+      <Header />
       <main className="pt-24 px-6 md:px-12 lg:px-24 space-y-32">
-       
+        {/* Sección Hero visual */}
+        <section id="inicio">
+          <Hero />
+        </section>
 
         {/* SOBRE MÍ */}
         <section id="sobre" className="scroll-mt-24">
@@ -44,8 +48,7 @@ export default function Home() {
           <p className="text-white/80">¿Quieres trabajar conmigo? ¡Hablemos!</p>
         </section>
       </main>
-
       <Footer />
-    </div>
+    </>
   );
 }

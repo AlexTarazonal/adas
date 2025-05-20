@@ -72,17 +72,28 @@ function GlowDots() {
 
 export default function Hero() {
   const controls = useAnimation();
-
   useEffect(() => {
-    controls.start({ opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } });
+    console.log(getComputedStyle(document.querySelector("h1")));
+  }, []);
+  useEffect(() => {
+    controls.start({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1, ease: "easeOut" },
+    });
   }, [controls]);
-
+  useEffect(() => {
+  const h1 = document.querySelector("h1");
+  if (h1) {
+    const computedStyle = getComputedStyle(h1);
+    console.log("🧪 H1 color:", computedStyle.color);
+  }
+}, []);
   return (
     <section
       id="inicio"
       className="relative flex items-center justify-center text-center h-screen overflow-hidden hero-bg"
     >
-    
       <div className="absolute inset-0 hero-overlay z-0 pointer-events-none" />
 
       <Canvas
@@ -94,7 +105,7 @@ export default function Hero() {
         <GlowDots />
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <Sphere args={[3, 64, 64]} scale={1.6}>
+        <Sphere args={[3, 64, 64]} scale={1.4}>
           <MeshDistortMaterial
             color="#ff5e87"
             emissive="#e100ff"
@@ -110,7 +121,9 @@ export default function Hero() {
         id="hero-particles"
         options={{
           fpsLimit: 60,
-          interactivity: { events: { onHover: { enable: true, mode: "repulse" } } },
+          interactivity: {
+            events: { onHover: { enable: true, mode: "repulse" } },
+          },
           particles: {
             number: { value: 18, density: { enable: true, area: 800 } },
             color: { value: "#ffffff" },
@@ -129,16 +142,9 @@ export default function Hero() {
         initial={{ opacity: 0, y: 40 }}
         animate={controls}
       >
-        <motion.h1
-          className="text-[5rem] md:text-[7rem] font-extrabold mb-4 gradient-h1"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, ease: "backOut" }}
-        >
-          ¡Hola! Soy&nbsp;
-          <span className="bg-clip-text gradient-alt-text text-transparent">
-            Alexander
-          </span>
+        <motion.h1 className="text-[5rem] md:text-[7rem] font-extrabold mb-4 text-white">
+          <span className="text-white">¡Hola! Soy&nbsp;</span>
+          <span className="gradient-alt-text">Alexander</span>
         </motion.h1>
 
         <motion.h2
@@ -168,7 +174,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          Creo experiencias web modernas, interactivas y accesibles, combinando diseño y rendimiento al máximo.
+          Creo experiencias web modernas, interactivas y accesibles, combinando
+          diseño y rendimiento al máximo.
         </motion.p>
       </motion.div>
 
@@ -191,7 +198,11 @@ export default function Hero() {
           text-shadow: 0px 2px 4px rgba(0,0,0,0.6), 0px 0px 10px rgba(255,255,255,0.3);
         }
         .gradient-h2 { background: linear-gradient(90deg, #0bc5ea 0%, #ed64a6 100%); -webkit-background-clip: text; color: transparent; }
-        .gradient-alt-text { background: linear-gradient(90deg, #ff5e87, #d34dff, #9b4eff); }
+     .gradient-alt-text {
+  background: linear-gradient(90deg, #ff5e87, #d34dff, #9b4eff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
         .text-paragraph { color: rgba(255,255,255,0.9); text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
       `}</style>
     </section>
