@@ -107,16 +107,31 @@ export default function Header() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 150, damping: 30 }}
-            className="sticky top-0 z-50 backdrop-blur-xl bg-gradient-to-r from-pink-600 via-fuchsia-600 to-purple-600/80 px-6 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.3)] rounded-b-xl"
+            className="sticky top-0 z-50 backdrop-blur-lg 
+   bg-gradient-to-r 
+     from-[#0bc5ea]/80   /* teal semi-transparente */ 
+     via-[#5a67d8]/80    /* indigo semi-transparente */ 
+     to-[#ed64a6]/80     /* magenta semi-transparente */ 
+   px-6 py-3 
+   shadow-lg 
+   rounded-b-2xl"
           >
-            <nav className="max-w-6xl mx-auto flex justify-center items-center space-x-4 md:space-x-6 lg:space-x-8 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl shadow-lg border border-white/20">
+            <nav
+              className="max-w-6xl mx-auto flex justify-center items-center 
+   space-x-4 md:space-x-6 lg:space-x-8 
+   px-6 py-3 
+   rounded-full 
+   bg-white/10 backdrop-blur-md 
+   shadow-[0_8px_20px_rgba(0,0,0,0.4)] 
+   border border-white/30"
+            >
               {links.map(({ label, href }) => {
                 const isActive = active === label;
                 return (
                   <motion.button
                     key={label}
                     onClick={() => handleClick(label, href)}
-                    className="relative z-10 px-5 py-2 text-sm font-medium rounded-full transition-all"
+                   className="relative z-10 px-6 py-2.5 text-base font-semibold rounded-full transition-all"
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.96 }}
                   >
@@ -132,7 +147,12 @@ export default function Header() {
                             stiffness: 700,
                             damping: 25,
                           }}
-                          className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+                         className="absolute inset-0 rounded-full 
+       bg-gradient-to-r 
+         from-[#0bc5ea] 
+         via-[#5a67d8] 
+         to-[#ed64a6] 
+      shadow-[0_0_16px_rgba(255,255,255,0.5)]"
                           style={{ zIndex: -1 }}
                         />
                       )}
@@ -149,26 +169,6 @@ export default function Header() {
                   </motion.button>
                 );
               })}
-
-              <motion.button
-                onClick={() => setDarkMode((prev) => !prev)}
-                aria-label="Toggle dark mode"
-                className="ml-4 p-3 rounded-full bg-white/10 border border-white/30 backdrop-blur-md"
-                whileHover={{ rotate: 15, scale: 1.15 }}
-                whileTap={{ rotate: -15, scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 350, damping: 20 }}
-              >
-                <motion.span
-                  key={darkMode ? "moon" : "sun"}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.6 }}
-                  transition={{ duration: 0.25 }}
-                  style={{ fontSize: "1.3rem" }}
-                >
-                  {darkMode ? "🌙" : "☀️"}
-                </motion.span>
-              </motion.button>
             </nav>
           </motion.header>
         )}

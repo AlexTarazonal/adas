@@ -46,7 +46,7 @@ export default function Hero() {
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         {/* Aquí el cambio clave: args y scale */}
-        <Sphere args={[3, 64, 64]} scale={2}>
+        <Sphere args={[3, 64, 64]} scale={1.6}>
           {" "}
           {/* radio = 3, escala = 2 */}
           <MeshDistortMaterial
@@ -92,7 +92,7 @@ export default function Hero() {
         animate={controls}
       >
         <motion.h1
-          className="text-[5rem] md:text-[7rem] font-extrabold mb-4 text-white bg-clip-text gradient-text"
+          className="text-[5rem] md:text-[7rem] font-extrabold mb-4 gradient-h1"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "backOut" }}
@@ -104,7 +104,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.h2
-          className="text-[2.5rem] md:text-[4rem] font-medium text-white mb-6"
+          className="text-[2.5rem] md:text-[4rem] font-medium mb-6 gradient-h2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
@@ -125,7 +125,7 @@ export default function Hero() {
         </motion.h2>
 
         <motion.p
-          className="text-[1.75rem] md:text-[2.25rem] text-white mb-10"
+          className="text-[1.75rem] md:text-[2.25rem] mb-10 text-paragraph"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
@@ -148,23 +148,26 @@ export default function Hero() {
             background-position: 0% 50%;
           }
         }
+
         .hero-bg {
+          /* Degradado triádico más suave y coordinado */
           background: linear-gradient(
-            270deg,
-            #ff0057,
-            #5f00ff,
-            #00eaff,
-            #ffae00,
-            #ff0057
+            60deg,
+            #0bc5ea 0%,
+            /* teal intenso (hace eco del turquesa de la esfera) */ #5a67d8 50%,
+            /* indigo medio (puente cromático) */ #ed64a6 100%
+              /* magenta suave (para casar con tu sphere) */
           );
-          background-size: 1200% 1200%;
-          animation: gradientBG 10s ease infinite;
+          background-size: 200% 200%; /* suaviza el movimiento */
+          animation: gradientBG 20s ease-in-out infinite;
         }
+    
         .hero-overlay {
+          /* Overlay muy sutil para reforzar contraste sin apagar la paleta */
           background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.6),
-            rgba(0, 0, 0, 0.3)
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.1)
           );
         }
         .gradient-text {
@@ -175,6 +178,35 @@ export default function Hero() {
         .gradient-alt-text {
           background: linear-gradient(90deg, #ff5e87, #d34dff, #9b4eff);
         }
+          
+.gradient-h1 {
+  /* casi blanco en el inicio para máximo contraste */
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 30%,
+    #ed64a6 70%,
+    #9b4eff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* sombra sutil para separar del fondo animado */
+  text-shadow:
+    0px 2px 4px rgba(0, 0, 0, 0.6),
+    0px 0px 10px rgba(255,255,255,0.3);
+}
+
+.gradient-h2 {
+  background: linear-gradient(90deg, #0bc5ea 0%, #ed64a6 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.text-paragraph {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
       `}</style>
     </section>
   );
