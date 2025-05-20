@@ -43,7 +43,7 @@ export default function Hero() {
         <directionalLight position={[5, 5, 5]} intensity={1} />
 
         {/* escala a tu gusto; como no hay recorte ahora, puedes subir a 4.5 o incluso 5 */}
-        <Sphere args={[3, 64, 64]} scale={2.5}>
+        <Sphere args={[3, 64, 64]} scale={1.6}>
           <MeshDistortMaterial
             color="#ff5e87"
             emissive="#e100ff"
